@@ -42,6 +42,7 @@ src/
   __init__.py
 README.md
 requirements.txt
+```
 
 ## Duomenys
 - `data/products_with_subcategory.csv` – metaduomenys (ID;Name;Category;Description;Price;Image URLs;Subcategory).
