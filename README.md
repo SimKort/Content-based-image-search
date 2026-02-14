@@ -63,7 +63,7 @@ python -m venv .venv
 `.\.venv\Scripts\Activate.ps1`
 > Jei PowerShell neleidžia vykdyti skriptų:
 
-Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`
+`Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`
 
 ### 3) Įdiekite priklausomybes
 ```text
