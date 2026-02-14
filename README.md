@@ -54,21 +54,28 @@ requirements.txt
 
 ## Sąranka (VS Code) - Clone Git Repository
 ### 1) Sukurkite virtualią aplinką
-`cd Content-based-image-search`
-`python -m venv .venv`
+```text
+cd Content-based-image-search
+python -m venv .venv
+```
 
 ### 2) Aktyvuokite .venv
 `.\.venv\Scripts\Activate.ps1`
 > Jei PowerShell neleidžia vykdyti skriptų:
-`Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`
+
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`
 
 ### 3) Įdiekite priklausomybes
-`python -m pip install -U pip`
-`pip install -r requirements.txt`
+```text
+python -m pip install -U pip
+pip install -r requirements.txt
+```
 
 ### 4) Įdiekite CLIP
-`pip install "setuptools<82"`
-`pip install --no-build-isolation git+https://github.com/openai/CLIP.git`
+```text
+pip install "setuptools<82"
+pip install --no-build-isolation git+https://github.com/openai/CLIP.git
+```
 
 ### 5) Paleidimas
 `streamlit run src/ui/app_streamlit.py`
