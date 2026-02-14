@@ -26,35 +26,20 @@ Projektas naudoja iš anksto apmokytą **OpenAI CLIP** modelį vaizdų savybių 
 
 ## Repo struktūra
 .streamlit
-
     config.toml
-
 data/
-
     examples
-
     clip_features.npz
-
     products_with_subcategory.csv
-
 notebooks/
-
     nd1.ipynb
-
 results/
-
     last_results.csv
-
 src/
-
     ui/
-
         app_streamlit.py
-
     _init_.py
-
 README.md
-
 requirements.txt
 
 ## Duomenys
@@ -67,49 +52,43 @@ requirements.txt
 
 ## Sąranka (VS Code) - Clone Git Repository
 ### 1) Sukurkite virtualią aplinką
-cd Content-based-image-search
-
-python -m venv .venv
+- cd Content-based-image-search
+- python -m venv .venv
 
 ### 2) Aktyvuokite .venv
-.\.venv\Scripts\Activate.ps1
-
+- .\.venv\Scripts\Activate.ps1
 > Jei PowerShell neleidžia vykdyti skriptų:
-
-Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+- Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
 
 ### 3) Įdiekite priklausomybes
-python -m pip install -U pip
-
-pip install -r requirements.txt
+- python -m pip install -U pip
+- pip install -r requirements.txt
 
 ### 4) Įdiekite CLIP
-pip install "setuptools<82"
-
-pip install --no-build-isolation git+https://github.com/openai/CLIP.git
+- pip install "setuptools<82"
+- pip install --no-build-isolation git+https://github.com/openai/CLIP.git
 
 ### 5) Paleidimas
-streamlit run src/ui/app_streamlit.py
-
+- streamlit run src/ui/app_streamlit.py
 > Atsidarys naršyklėje (pvz. http://localhost:8501). Pirmas užkrovimas ir užklausos apdorojimas užtrunka daugiau laiko, po to viskas vykdoma labai greitai.
 
 ## Naudojimas
-Įkelkite bato nuotrauką (PNG/JPG/JPEG).
-Pasirinkite kiek panašių batų rodyti.
-Pasirinkite kategoriją: Moteriški ir vyriški / Moteriški / Vyriški.
-Peržiūrėkite gautus rezultatus.
-Po paieškos automatiškai išsaugomas rezultatų CSV į results/.
+- Įkelkite bato nuotrauką (PNG/JPG/JPEG).
+- Pasirinkite kiek panašių batų rodyti.
+- Pasirinkite kategoriją: Moteriški ir vyriški / Moteriški / Vyriški.
+- Peržiūrėkite gautus rezultatus.
+- Po paieškos automatiškai išsaugomas rezultatų CSV į results/.
 
 ## Žinomos problemos / apribojimai
-CLIP diegimas Windows + Python 3.12: gali reikėti setuptools<82 ir --no-build-isolation (žr. sąranką).
-Duomenų priklausomybė nuo URL: jei kai kurie Image URLs nepasiekiami (404), tuomet dalis rezultatų gali nerodyti nuotraukos.
-Kategorijų neatitikimai: filtras remiasi Category reikšmėmis CSV. Jei duomenyse yra skirtingas žymėjimas, filtravimą reikia adaptuoti.
-Veikimo greitis: embeddings naudojami iš npz, bet užklausos embedding skaičiuojamas realiu laiku. CPU režime tai gali būti lėčiau.
+- CLIP diegimas Windows + Python 3.12: gali reikėti setuptools<82 ir --no-build-isolation (žr. sąranką).
+- Duomenų priklausomybė nuo URL: jei kai kurie Image URLs nepasiekiami (404), tuomet dalis rezultatų gali nerodyti nuotraukos.
+- Kategorijų neatitikimai: filtras remiasi Category reikšmėmis CSV. Jei duomenyse yra skirtingas žymėjimas, filtravimą reikia adaptuoti.
+- Veikimo greitis: embeddings naudojami iš npz, bet užklausos embedding skaičiuojamas realiu laiku. CPU režime tai gali būti lėčiau.
 
 ## Naudotos technologijos
-Python, NumPy, Pandas
-PyTorch
-OpenAI CLIP (ViT-B/32)
-scikit-learn (NearestNeighbors)
-Streamlit (UI)
-PIL (Pillow) vaizdų apdorojimui
+- Python, NumPy, Pandas
+- PyTorch
+- OpenAI CLIP (ViT-B/32)
+- scikit-learn (NearestNeighbors)
+- Streamlit (UI)
+- PIL (Pillow) vaizdų apdorojimui
