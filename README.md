@@ -32,6 +32,7 @@ $x_i^{(normuota)}=\frac{x_i}{\sqrt{\sum_{j=1}^{n}x_j^2}}$.
   config.toml
 data/
   examples/
+  images/
   clip_features.npz
   products_with_subcategory.csv
 notebooks/
@@ -55,6 +56,7 @@ Duomenys buvo paimti iš eavalyne.lt svetainės. Jie buvo surinkti automatiniu b
   - `paths` – vaizdų vietos.
   - `features` – požymių vektoriai.
 - `data/images` - visi ištraukti vaizdai, su kuriais atliekamas palyginimas.
+- `data/examples` - pavyzdiniai vaizdai programai testuoti.
 
 > Pastaba: rezultatai UI atvaizduojami pagal `Image URLs` lauką iš CSV.
 
@@ -106,6 +108,7 @@ pip install --no-build-isolation git+https://github.com/openai/CLIP.git
 - Veikimo greitis: požymių vektoriai naudojami iš `data/clip_features.npz`, bet užklausos embedding skaičiuojamas realiu laiku. CPU režime tai gali būti lėčiau.
 - Kadangi kai kuriose kategorijose yra mažai vaizdų, daliai batų gali būti pateikti netikslūs rezultatai.
 - Kadangi modelis yra bendrinis, tai gauti požymių vektoriai gali nepakankamai informatyviai atspindėti vaizdą.
+- Paieška veikia prasčiau, kai pateikta bato nuotrauka padaryta ne iš šono.
 
 ## Naudotos technologijos
 - Python, NumPy, Pandas
