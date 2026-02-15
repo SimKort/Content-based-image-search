@@ -114,5 +114,5 @@ pip install --no-build-isolation git+https://github.com/openai/CLIP.git
 - scikit-learn (NearestNeighbors, cosine_similarity)
 - Streamlit (UI)
 - PIL (Pillow) vaizdų apdorojimui
-- BeautifulSoup, requests, urllib, re, csv, os, shutil, time
-- tqdm, matplotlib, collections
+- BeautifulSoup, requests, urllib, re, csv, os, shutil, time – duomenų paruošimas
+- Matplotlib – vizualizacija
