@@ -13,8 +13,10 @@ Projektas naudoja iš anksto apmokytą **OpenAI CLIP** modelį vaizdų savybių 
 - Užklausos nuotrauka taip pat užkoduojama į embedding.
 
 ### 2) Panašumo paieška
-- Visi embeddings normalizuojami (L2), kad cosine atstumas būtų stabilus.
+- Vaizdų požymių vektoriai normuojami pagal formulę:
+  
 - Naudojamas `sklearn.neighbors.NearestNeighbors(metric="cosine")`.
+- Artimiausių vaizdų paieška atliekama pagal `sklearn.neighbors.NearestNeighbors(metric="cosine")`, kurios metu skaičiuojamas panašumas tarp skirtingų vektorių pagal kosinusą ir grąžinama $n$ artimiausių kaimynų.
 - Rezultatai rikiuojami pagal mažiausią cosine atstumą (didžiausią panašumą `sim = 1 - distance`).
 
 ### 3) UI (Streamlit)
