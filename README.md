@@ -2,9 +2,9 @@
 
 ## Apžvalga
 Šis projektas įgyvendina turiniu pagrįstą vaizdų paiešką batų nuotraukoms.
-Vartotojas įkelia užklausos (query) bato nuotrauką, pasirenka kiek rezultatų grąžinti ir kategoriją (moteriški ir vyriški / moteriški / vyriški). Sistema grąžina N panašiausių batų nuotraukų su jų pavadinimais pagal vaizdo turinį.
+Vartotojas įkelia užklausos (angl. _query_) bato nuotrauką, pasirenka kiek rezultatų grąžinti ir kategoriją (moteriški ir vyriški / moteriški / vyriški). Sistema grąžina $n$ panašiausių batų nuotraukų su jų pavadinimais pagal vaizdo turinį.
 
-Projekte naudojamas iš anksto apmokytas **OpenAI CLIP** modelis vaizdų požymių vektoriams išgauti ir **cosine** atstumą panašumui skaičiuoti. Modelio mokymas nuo nulio nevykdomas.
+Projekte naudojamas iš anksto apmokytas **OpenAI CLIP** modelis vaizdų požymių vektoriams išgauti ir **cosine** atstumas panašumui skaičiuoti. Modelio mokymas nuo nulio nevykdomas.
 
 ## Metodai
 ### 1) Vaizdų požymių vektoriai su CLIP
@@ -15,9 +15,13 @@ Projekte naudojamas iš anksto apmokytas **OpenAI CLIP** modelis vaizdų požymi
 ### 2) Panašumo paieška
 - Vaizdų požymių vektoriai normuojami pagal formulę:
   
-$x_i^{(normuota)}=\frac{x_i}{\sqrt{\sum_{j=1}^{n}x_j^2}}$.
+$$
+\begin{aligned}
+x_i^{(normuota)}=\frac{x_i}{\sqrt{\sum_{j=1}^{n}x_j^2}}.
+\end{aligned}
+$$
 
-- Panašių vaizdų paieškai sudaromas modelis `sklearn.neighbors.NearestNeighbors`. Taikant `kneighbors` pagal kosinusą palyginamas ieškomo vaizdo vektorius su kitų vaizdų vektoriais ir grąžinami atstumai bei top pasirinktų panašiausių vaizdų indeksai.
+- Panašių vaizdų paieškai sudaromas modelis `sklearn.neighbors.NearestNeighbors`. Taikant `kneighbors` pagal kosinusinį panašumą palyginamas ieškomo vaizdo vektorius su kitų vaizdų vektoriais ir grąžinami atstumai bei top pasirinktų panašiausių vaizdų indeksai.
 
 ### 3) UI (Streamlit)
 - Failo įkėlimas (query image).
@@ -48,7 +52,7 @@ requirements.txt
 ```
 
 ## Duomenys
-Duomenys buvo paimti iš eavalyne.lt svetainės. Jie buvo surinkti automatiniu būdu (žr. `notebooks/nd1.ipynb`). Iš viso ištraukta 6451 skirtingų batų, tarp kurių 3322 moteriški ir 3129 vyriški. Tarp **moteriškų** batų buvo gautos šios kategorijos: aukštakulniai, auliniai batai, balerinos, batai uždaroms aikštelėms, batai vandens sportui, batai į sporto salę, aulinukai, bateliai, botfortai, bėgimo batai, guminiai batai, ilgaauliai, jojikų batai, kaubojiški batai, kedai, kerzai, laisvalaikio batai, loaferai, lordsai, mokasinai, naminės šlepetės, oksfordo batai, pusbačiai, sniego batai, sportbačiai, teniso batai, turistiniai batai, štibletai, žygio batai. Tarp **vyriškų** batų gautos šios kategorijos: auliniai batai, aulinukai, batai uždaroms aikštelėms, batai vandens sportui, batai į sporto salę, bokso batai, bėgimo batai, futbolo batai, guminiai batai, ilgaauliai, kedai, krepšinio batai, laisvalaikio batai, loaferai, lordsai, mokasinai, naminės šlepetės, pusbačiai, sniego batai, sportbačiai, teniso batai, turistiniai batai, štibletai, žygio batai. Kiek kiekvienoje kategorijoje batų žr. `notebooks/nd1.ipynb`.
+Duomenys buvo paimti iš **eavalyne.lt** svetainės. Jie buvo surinkti automatiniu būdu (žr. `notebooks/nd1.ipynb`). Iš viso ištraukta 6451 skirtingų batų, tarp kurių 3322 moteriški ir 3129 vyriški. Tarp **moteriškų** batų buvo gautos šios kategorijos: aukštakulniai, auliniai batai, balerinos, batai uždaroms aikštelėms, batai vandens sportui, batai į sporto salę, aulinukai, bateliai, botfortai, bėgimo batai, guminiai batai, ilgaauliai, jojikų batai, kaubojiški batai, kedai, kerzai, laisvalaikio batai, loaferai, lordsai, mokasinai, naminės šlepetės, oksfordo batai, pusbačiai, sniego batai, sportbačiai, teniso batai, turistiniai batai, štibletai, žygio batai. Tarp **vyriškų** batų gautos šios kategorijos: auliniai batai, aulinukai, batai uždaroms aikštelėms, batai vandens sportui, batai į sporto salę, bokso batai, bėgimo batai, futbolo batai, guminiai batai, ilgaauliai, kedai, krepšinio batai, laisvalaikio batai, loaferai, lordsai, mokasinai, naminės šlepetės, pusbačiai, sniego batai, sportbačiai, teniso batai, turistiniai batai, štibletai, žygio batai. Kiek kiekvienoje kategorijoje batų žr. `notebooks/nd1.ipynb`.
 
 **Duomenų struktūra:**
 - `data/products_with_subcategory.csv` – metaduomenys (ID; Name; Category; Description; Price; Image URLs; Subcategory).
@@ -64,7 +68,6 @@ Duomenys buvo paimti iš eavalyne.lt svetainės. Jie buvo surinkti automatiniu b
 ### 1) Gaukite programos failus iš GitHub
 ```text
 git clone https://github.com/SimKort/Content-based-image-search.git
-cd Content-based-image-search
 ```
 
 ### 2) Sukurkite virtualią aplinką
@@ -118,4 +121,4 @@ pip install --no-build-isolation git+https://github.com/openai/CLIP.git
 - Streamlit (UI)
 - PIL (Pillow) vaizdų apdorojimui
 - BeautifulSoup, requests, urllib, re, csv, os, shutil, time – duomenų paruošimas
-- Matplotlib – vizualizacija
+- Matplotlib – vizualizacijai
