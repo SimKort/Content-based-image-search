@@ -2,22 +2,22 @@
 
 ## Apžvalga
 Šis projektas įgyvendina turiniu pagrįstą vaizdų paiešką batų nuotraukoms.
-Vartotojas įkelia užklausos (query) bato nuotrauką, pasirenka kiek rezultatų grąžinti (Top-K) ir kategoriją (moteriški ir vyriški / moteriški / vyriški). Sistema grąžina N panašiausių batų nuotraukų su jų pavadinimais pagal vaizdo turinį.
+Vartotojas įkelia užklausos (query) bato nuotrauką, pasirenka kiek rezultatų grąžinti ir kategoriją (moteriški ir vyriški / moteriški / vyriški). Sistema grąžina N panašiausių batų nuotraukų su jų pavadinimais pagal vaizdo turinį.
 
-Projektas naudoja iš anksto apmokytą **OpenAI CLIP** modelį vaizdų savybių žymėms (embedding’ams) išgauti ir **cosine** atstumą panašumui skaičiuoti. Modelio mokymas nuo nulio nevykdomas.
+Projekte naudojamas iš anksto apmokytas **OpenAI CLIP** modelis vaizdų požymių vektoriams išgauti ir **cosine** atstumą panašumui skaičiuoti. Modelio mokymas nuo nulio nevykdomas.
 
 ## Metodai
-### 1) Savybių žymės (embeddings) su CLIP
+### 1) Vaizdų požymių vektoriai su CLIP
 - Naudojamas CLIP `ViT-B/32` modelis.
-- Kiekvienam katalogo vaizdui iš anksto sugeneruojamas vektorius (embedding) ir išsaugomas `data/clip_features.npz`.
-- Užklausos nuotrauka taip pat užkoduojama į embedding.
+- Kiekvienam katalogo vaizdui iš anksto sugeneruojamas vektorius ir išsaugomas `data/clip_features.npz`.
+- Taikant šį modelį užklausos nuotrauka taip pat užkoduojama į vektorių.
 
 ### 2) Panašumo paieška
 - Vaizdų požymių vektoriai normuojami pagal formulę:
   
-  $x_i^{(normuota)}=\frac{x_i}{\sqrt{\sum_{j=1}^{n}x_j^2}}$.
-- Artimiausių vaizdų paieška atliekama pagal `sklearn.neighbors.NearestNeighbors(metric="cosine")`, kurios metu skaičiuojamas panašumas tarp skirtingų vektorių pagal kosinusą ir grąžinama $n$ artimiausių kaimynų.
-- Rezultatai rikiuojami pagal mažiausią cosine atstumą (didžiausią panašumą `sim = 1 - distance`).
+$x_i^{(normuota)}=\frac{x_i}{\sqrt{\sum_{j=1}^{n}x_j^2}}$.
+
+- Panašių vaizdų paieškai sudaromas modelis `sklearn.neighbors.NearestNeighbors`. Taikant `kneighbors` pagal kosinusą palyginamas ieškomo vaizdo vektorius su kitų vaizdų vektoriais ir grąžinami atstumai bei top pasirinktų panašiausių vaizdų indeksai.
 
 ### 3) UI (Streamlit)
 - Failo įkėlimas (query image).
@@ -47,10 +47,14 @@ requirements.txt
 ```
 
 ## Duomenys
-- `data/products_with_subcategory.csv` – metaduomenys (ID;Name;Category;Description;Price;Image URLs;Subcategory).
-- `data/clip_features.npz` – iš anksto sugeneruoti CLIP embeddings:
-  - `paths` – originalūs vaizdų keliai / ID šaltinis
-  - `features` – embedding vektoriai
+Duomenys buvo paimti iš eavalyne.lt svetainės. Jie buvo surinkti automatiniu būdu (žr. kodą `notebooks\nd1.ipynb`). Iš viso ištraukta 6451 skirtingų batų, tarp kurių 3322 moteriški ir 3129 vyriški. Tarp **moteriškų** batų buvo gautos šios kategorijos: aukštakulniai, auliniai batai, balerinos, batai uždaroms aikštelėms, batai vandens sportui, batai į sporto salę, aulinukai, bateliai, botfortai, bėgimo batai, guminiai batai, ilgaauliai, jojikų batai, kaubojiški batai, kedai, kerzai, laisvalaikio batai, loaferai, lordsai, mokasinai, naminės šlepetės, oksfordo batai, pusbačiai, sniego batai, sportbačiai, teniso batai, turistiniai batai, štibletai, žygio batai. Tarp vyriškų batų gautos šios kategorijos: auliniai batai, aulinukai, batai uždaroms aikštelėms, batai vandens sportui, batai į sporto salę, bokso batai, bėgimo batai, futbolo batai, guminiai batai, ilgaauliai, kedai, krepšinio batai, laisvalaikio batai, loaferai, lordsai, mokasinai, naminės šlepetės, pusbačiai, sniego batai, sportbačiai, teniso batai, turistiniai batai, štibletai, žygio batai. Kiek kiekvienoje kategorijoje batų žr. `notebooks/nd1.ipynb`.
+
+**Duomenų struktūra:**
+- `data/products_with_subcategory.csv` – metaduomenys (ID; Name; Category; Description; Price; Image URLs; Subcategory).
+- `data/clip_features.npz` – iš anksto sugeneruoti CLIP požymių vektoriai:
+  - `paths` – vaizdų vietos.
+  - `features` – požymių vektoriai.
+- `data/images` - visi ištraukti vaizdai, su kuriais atliekamas palyginimas.
 
 > Pastaba: rezultatai UI atvaizduojami pagal `Image URLs` lauką iš CSV.
 
