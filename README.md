@@ -15,7 +15,7 @@ Projektas naudoja iš anksto apmokytą **OpenAI CLIP** modelį vaizdų savybių 
 ### 2) Panašumo paieška
 - Vaizdų požymių vektoriai normuojami pagal formulę:
   
-- Naudojamas `sklearn.neighbors.NearestNeighbors(metric="cosine")`.
+  $x_i^{(normuota)}=\frac{x_i}{\sqrt{\sum_{j=1}^{n}x_j^2}}$.
 - Artimiausių vaizdų paieška atliekama pagal `sklearn.neighbors.NearestNeighbors(metric="cosine")`, kurios metu skaičiuojamas panašumas tarp skirtingų vektorių pagal kosinusą ir grąžinama $n$ artimiausių kaimynų.
 - Rezultatai rikiuojami pagal mažiausią cosine atstumą (didžiausią panašumą `sim = 1 - distance`).
 
@@ -54,32 +54,38 @@ requirements.txt
 
 > Pastaba: rezultatai UI atvaizduojami pagal `Image URLs` lauką iš CSV.
 
-## Sąranka (VS Code) - Clone Git Repository
-### 1) Sukurkite virtualią aplinką
+## Įdiegimo instrukcijos
+### 1) Gaukite programos failus iš GitHub
+```text
+git clone https://github.com/SimKort/Content-based-image-search.git
+cd Content-based-image-search
+```
+
+### 2) Sukurkite virtualią aplinką
 ```text
 cd Content-based-image-search
 python -m venv .venv
 ```
 
-### 2) Aktyvuokite .venv
+### 3) Aktyvuokite .venv
 `.\.venv\Scripts\Activate.ps1`
 > Jei PowerShell neleidžia vykdyti skriptų:
 
 `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`
 
-### 3) Įdiekite priklausomybes
+### 4) Įdiekite priklausomybes
 ```text
 python -m pip install -U pip
 pip install -r requirements.txt
 ```
 
-### 4) Įdiekite CLIP
+### 5) Įdiekite CLIP
 ```text
 pip install "setuptools<82"
 pip install --no-build-isolation git+https://github.com/openai/CLIP.git
 ```
 
-### 5) Paleidimas
+### 6) Paleidimas
 `streamlit run src/ui/app_streamlit.py`
 > Atsidarys naršyklėje (pvz. http://localhost:8501). Pirmas užkrovimas ir užklausos apdorojimas užtrunka daugiau laiko, po to viskas vykdoma labai greitai.
 
