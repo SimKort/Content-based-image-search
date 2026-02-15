@@ -47,7 +47,7 @@ requirements.txt
 ```
 
 ## Duomenys
-Duomenys buvo paimti iš eavalyne.lt svetainės. Jie buvo surinkti automatiniu būdu (žr. kodą `notebooks\nd1.ipynb`). Iš viso ištraukta 6451 skirtingų batų, tarp kurių 3322 moteriški ir 3129 vyriški. Tarp **moteriškų** batų buvo gautos šios kategorijos: aukštakulniai, auliniai batai, balerinos, batai uždaroms aikštelėms, batai vandens sportui, batai į sporto salę, aulinukai, bateliai, botfortai, bėgimo batai, guminiai batai, ilgaauliai, jojikų batai, kaubojiški batai, kedai, kerzai, laisvalaikio batai, loaferai, lordsai, mokasinai, naminės šlepetės, oksfordo batai, pusbačiai, sniego batai, sportbačiai, teniso batai, turistiniai batai, štibletai, žygio batai. Tarp vyriškų batų gautos šios kategorijos: auliniai batai, aulinukai, batai uždaroms aikštelėms, batai vandens sportui, batai į sporto salę, bokso batai, bėgimo batai, futbolo batai, guminiai batai, ilgaauliai, kedai, krepšinio batai, laisvalaikio batai, loaferai, lordsai, mokasinai, naminės šlepetės, pusbačiai, sniego batai, sportbačiai, teniso batai, turistiniai batai, štibletai, žygio batai. Kiek kiekvienoje kategorijoje batų žr. `notebooks/nd1.ipynb`.
+Duomenys buvo paimti iš eavalyne.lt svetainės. Jie buvo surinkti automatiniu būdu (žr. `notebooks/nd1.ipynb`). Iš viso ištraukta 6451 skirtingų batų, tarp kurių 3322 moteriški ir 3129 vyriški. Tarp **moteriškų** batų buvo gautos šios kategorijos: aukštakulniai, auliniai batai, balerinos, batai uždaroms aikštelėms, batai vandens sportui, batai į sporto salę, aulinukai, bateliai, botfortai, bėgimo batai, guminiai batai, ilgaauliai, jojikų batai, kaubojiški batai, kedai, kerzai, laisvalaikio batai, loaferai, lordsai, mokasinai, naminės šlepetės, oksfordo batai, pusbačiai, sniego batai, sportbačiai, teniso batai, turistiniai batai, štibletai, žygio batai. Tarp **vyriškų** batų gautos šios kategorijos: auliniai batai, aulinukai, batai uždaroms aikštelėms, batai vandens sportui, batai į sporto salę, bokso batai, bėgimo batai, futbolo batai, guminiai batai, ilgaauliai, kedai, krepšinio batai, laisvalaikio batai, loaferai, lordsai, mokasinai, naminės šlepetės, pusbačiai, sniego batai, sportbačiai, teniso batai, turistiniai batai, štibletai, žygio batai. Kiek kiekvienoje kategorijoje batų žr. `notebooks/nd1.ipynb`.
 
 **Duomenų struktūra:**
 - `data/products_with_subcategory.csv` – metaduomenys (ID; Name; Category; Description; Price; Image URLs; Subcategory).
@@ -101,10 +101,11 @@ pip install --no-build-isolation git+https://github.com/openai/CLIP.git
 - Po paieškos automatiškai išsaugomas rezultatų CSV į results/.
 
 ## Žinomos problemos / apribojimai
-- CLIP diegimas Windows + Python 3.12: gali reikėti setuptools<82 ir --no-build-isolation (žr. sąranką).
-- Duomenų priklausomybė nuo URL: jei kai kurie Image URLs nepasiekiami (404), tuomet dalis rezultatų gali nerodyti nuotraukos.
-- Kategorijų neatitikimai: filtras remiasi Category reikšmėmis CSV. Jei duomenyse yra skirtingas žymėjimas, filtravimą reikia adaptuoti.
-- Veikimo greitis: embeddings naudojami iš npz, bet užklausos embedding skaičiuojamas realiu laiku. CPU režime tai gali būti lėčiau.
+- CLIP diegimas Windows + Python 3.12: gali reikėti setuptools<82 ir --no-build-isolation (žr. įdiegimo instrukcijos).
+- Duomenų priklausomybė nuo URL: jei kai kurie nuotraukų URLs nepasiekiami (404), tuomet dalis rezultatų gali nerodyti nuotraukos.
+- Veikimo greitis: požymių vektoriai naudojami iš `data/clip_features.npz`, bet užklausos embedding skaičiuojamas realiu laiku. CPU režime tai gali būti lėčiau.
+- Kadangi kai kuriose kategorijose yra mažai vaizdų, daliai batų gali būti pateikti netikslūs rezultatai.
+- Kadangi modelis yra bendrinis, tai gauti požymių vektoriai gali nepakankamai informatyviai atspindėti vaizdą.
 
 ## Naudotos technologijos
 - Python, NumPy, Pandas
